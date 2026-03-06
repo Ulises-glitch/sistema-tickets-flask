@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tickets</title>
+</head>
+<body>
+<h1>Lista de tickets</h1>
+<!--  Texto para clicklear --->
+<a href="/crear">Crear nuevo ticket</a>
+<br>
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Titulo</th>
+        <th>Descripción</th>
+        <th>Prioridad</th>
+        <th>Estado</th>
+        <th>Usuario</th>
+        <th>Fecha</th>
+    </tr>
+    <!--- Conexión con jinja2 -->
+    {% for ticket in tickets %}
+    <tr>
+        <td>{{ ticket[0] }}</td>
+        <td>{{ ticket[1] }}</td>
+        <td>{{ ticket[2] }}</td>
+        <td>{{ ticket[3] }}</td>
+        <td>{{ ticket[4] }}</td>
+        <td>{{ ticket[6] }}</td>
+        <td>{{ ticket[5] }}</td>
+        
+        <!--- Botón para eliminarlos alv -->
+        <td>
+            <a href="/eliminar/{{ ticket[0] }}" onclick="return ConfirmarBorrado()">
+                <button style="background:rgb(202, 38, 139); color:rgb(199, 182, 127);">Completado</button>
+            </a>
+        </td>
+        
+    </tr> 
+    {% endfor %}
+</table>
+</body>
+</html>
+<script>
+    function ConfirmarBorrado() 
+    {
+        return confirm("Seguro que quieres eliminar este ticket")
+    }
+</script>
