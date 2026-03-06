@@ -4,28 +4,43 @@
     <title>Crear ticket</title>
 </head>
 <body>
-    <h1>Crear ticket</h1>
+<!--  Implementar código de base.html  --->
+{% extends "base.html" %}
+{% block title %} Ver tickets {% endblock %}
+{% block content %}
+<div class="container mt-5 p-4 shadow rounded bg-light">
+    <h2 class="text-primary mb-4">Crear ticket</h2>
 
     <form method="POST">
 
-        <label>Titulo:</label><br>
-        <input type="text" name="titulo"><br><br>
+        <div class="mb-3">
+            <label class="form-label fw-bold">Usuario:</label>
+            <input type="text" class="form-control" name="usuario">
+        </div>
 
-        <label>Descripción:</label><br>
-        <input type="text", name="descripcion"><br><br>
+        <div class="mb-3">
+            <label class="form-label fw-bold">Titulo:</label>
+            <input type="text" class="form-control" name="titulo">
+        </div>
 
-        <label>Prioridad:</label><br><br>
-        <select name="prioridad">
-            <option value="baja">Baja</option>
-            <option value="media">Media</option>
-            <option value="alta">Alta</option>
-        </select><br><br>
+        <div class="mb-3">
+            <label class="form-label fw-bold">Descripción:</label><br>
+            <textarea type="text" class="form-control" name="descripcion"></textarea>
+        </div>
 
-        <label>Usuario:</label><br>
-        <input type="text" name="usuario"><br><br>
+        <div class="mb-3">
+            <label class="form-label fw-bold">Prioridad:</label>
+            <select name="prioridad" class="select rounded">
+                <option value="baja">🟢 Baja</option>
+                <option value="media">🟡 Media</option>
+                <option value="alta">🔴 Alta</option>
+            </select>
+        </div>
 
-        <button type="submit">Crear Ticket</button>
-
+        <button type="submit" class="btn btn-succes mb-m"> ➕ Crear Ticket</button>
+        
     </form>
+</div>
+{% endblock %}
 </body>
 </html>

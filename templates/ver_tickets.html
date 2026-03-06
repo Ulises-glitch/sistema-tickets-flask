@@ -1,14 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Tickets</title>
+    <title>Sistema de tickets</title>
 </head>
+
 <body>
-<h1>Lista de tickets</h1>
+<!--  Implementar código de base.html  --->
+{% extends "base.html" %}
+{% block title %} Ver tickets {% endblock %}
+{% block content %}
+
+<h1 class="text-primary">Lista de tickets</h1>
+
 <!--  Texto para clicklear --->
-<a href="/crear">Crear nuevo ticket</a>
+<a href="/crear" class="btn btn-succes mb-m">➕ Agregar Ticket</a>
 <br>
-<table border="1">
+<table class="table table-striped">
     <tr>
         <th>ID</th>
         <th>Titulo</th>
@@ -39,6 +46,8 @@
     </tr> 
     {% endfor %}
 </table>
+{% endblock %}
+
 </body>
 </html>
 <script>
