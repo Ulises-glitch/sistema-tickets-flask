@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-5">
+    <h2>iniciar Sesión</h2>
+    <form method="POST">
+        <div class="mb-3">
+            <label>usuario:</label>
+            <input type="text" name="username" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label>Contraseña:</label>
+            <input type="password" name="password" class="form-control">
+        </div>
+        <button class="btn btn-primary">Entrar</button>
+    </form>
+</div>
+{% endblock %}
