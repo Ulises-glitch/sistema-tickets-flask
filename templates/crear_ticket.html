@@ -9,30 +9,51 @@
 
         <div class="mb-3">
             <label class="form-label fw-bold">Usuario:</label>
-            <input type="text" class="form-control" name="usuario">
+            <input type="text" class="form-control shadow-sm" name="usuario" value="{{ session.usuario }}" required>
         </div>
 
         <div class="mb-3">
             <label class="form-label fw-bold">Titulo:</label>
-            <input type="text" class="form-control" name="titulo">
+            <input type="text" class="form-control shadow-sm" name="titulo" required>
         </div>
 
         <div class="mb-3">
             <label class="form-label fw-bold">Descripción:</label><br>
-            <textarea type="text" class="form-control" name="descripcion"></textarea>
+            <textarea type="text" class="form-control shadow-sm" name="descripcion" required></textarea>
         </div>
 
         <div class="mb-3">
             <label class="form-label fw-bold">Prioridad:</label>
-            <select name="prioridad" class="select rounded">
-                <option value="baja">🟢 Baja</option>
-                <option value="media">🟡 Media</option>
-                <option value="alta">🔴 Alta</option>
+            <select name="prioridad" class="form-select form-select-lg shadow-sm" onchange="cambiarColor(this)" required>
+                <option value="" disabled selected>Seleccione Prioridad</option>
+                <option value="naja">🟢 Baja prioridad</option>
+                <option value="media">🟡 Media prioridad</option>
+                <option value="alta">🔴 Alta prioridad</option>
             </select>
         </div>
 
-        <button type="submit" class="btn btn-succes mb-m"> ➕ Crear Ticket</button>
-        
+        <div class="mb-3  text-center">
+            <button type="submit" class="btn btn-succes btn-lg px-4 py-2 shadow"><i class="bi bi-ticket-perforated me-2"></i> Crear Ticket</button>
+        </div>
+
     </form>
 </div>
+<!---Script para cambiar color de seleccionador xd --->
+<script>
+    function cambiarColor(select)
+    {
+        if(select.value == "naja")
+        {
+            select.style.borderColor = "green"
+        }
+        if(select.value == "media")
+        {
+            select.style.borderColor = "orange"
+        }
+        if(select.value == "alta")
+        {
+            select.style.borderColor = "red "
+        }
+    }
+</script>
 {% endblock %}

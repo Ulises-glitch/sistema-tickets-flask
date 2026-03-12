@@ -56,6 +56,23 @@
     {% endfor %}
 </table>
 </div>
+
+<div class="d-flex justify-content-center met-4 mt-4">
+
+    {% if pagina > 1 %}
+    <a class="btn btn-outline-primary me-2" href="/?pagina={{ pagina - 1 }}"> ⬅ Anterior </a>
+    {% else %}
+    <button class="btn btn-outline-secondary me-2" disable> ⬅ Anterior </button>
+    {% endif %}
+
+    {% if tickets|length == 4 %}
+    <a class="btn btn-outline-primary" href="/?pagina={{ pagina + 1 }}">Siguiente ➡</a>
+    {% else %}
+    <button class="btn btn-outline-secondary me-2" disabled> Siguiente ➡ </button>
+    {% endif %}
+</div>
+
+<!--- Script para programar funsion que hará referencia al decorador "borrar ticket" -->
 <script>
 function setTicketId(id) 
 {
@@ -63,6 +80,7 @@ function setTicketId(id)
 }
 </script>
 
+<!--- modales para el mensaje de eliminar -->
 <div class="modal fade" id="modalEliminar" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -80,7 +98,7 @@ function setTicketId(id)
                 <button class="btn btn-secondary" data-bs-dismiss="modal">
                     Cancelar
                 </button>
-
+                <!--- acción que manda llamar la funsion de arriba para eliminar el ticket seleccionado -->
                 <a id="btnConfirmarEliminar" class="btn btn-danger">
                     Eliminar
                 </a>

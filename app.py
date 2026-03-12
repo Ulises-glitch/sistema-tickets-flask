@@ -1,5 +1,5 @@
 ## Librerias
-from flask import Flask, redirect, render_template, request, session
+from flask import Flask, redirect, render_template, request, session, flash
 import  mysql.connector 
 
 ## Crear objeto con la clase Flask de macro-framework flask
@@ -32,7 +32,8 @@ def login():
 
             return redirect("/")
         else: 
-            return "usuario o contraseña incorrectos"
+            flash("⚠ usuario o contraseña incorrectos", "danger")
+            return redirect("/login")
         
     ## Retorno si la fusion no detecta evento POST
     return render_template("login.html")
@@ -55,16 +56,21 @@ def home():
     ## Crear un objeto con la conexión a la db
     cursor = conexion.cursor()
 
+    pagina = request.args.get("pagina", 1, type=int)
+    limite = 4
+    offset = (pagina - 1) * limite
+
     ## Condición para realizar consulta deacuerdo con el buscardor
     if buscar:
-        cursor.execute("""select * from tickets where titulo like %s or usuario like %s""", (f"%{buscar}%", f"%{buscar}%"))
+        cursor.execute("""select * from tickets where titulo like %s or usuario like %s order by id_ticket desc limit %s offset %s""", 
+                       (f"%{buscar}%", f"%{buscar}%", limite, offset))
     else:
-        cursor.execute("Select * from tickets")
+        cursor.execute("Select * from tickets order by id_ticket desc limit %s offset %s", (limite, offset))
     ## Traer los resultados de la consulta
     tickets = cursor.fetchall()
 
     # return "Sistema de tickets funcionando 🔥"
-    return render_template("ver_tickets.html", tickets = tickets)
+    return render_template("ver_tickets.html", tickets = tickets, pagina = pagina)
 
 ## Crear decorador para... Get: mostrar formulario o POST: recivir datos enviados
 @app.route("/crear", methods = ["GET", "POST"])
@@ -72,10 +78,17 @@ def crear_ticket():
     ## Condicional para saber si antes la función leyó un metodo tipo POST
     if request.method == "POST":
         # reques.form obtiene los datos del formulario HTML
-        titulo = request.form["titulo"]
-        descripcion = request.form["descripcion"]
-        prioridad = request.form["prioridad"]
-        usuario = request.form["usuario"]
+        titulo = request.form.get("titulo")
+        descripcion = request.form.get("descripcion")
+        prioridad = request.form.get("prioridad")
+        usuario = request.form.get("usuario")
+
+        ## Condición para validar que los campos no vnegan sin datos o valores
+        if not titulo or not descripcion or not prioridad or not usuario:
+            flash("Todos los campos son obligatorios", "danger")
+            return redirect("/crear")
+        
+        ## Almacenar los datos mandados del template en la variable "valores"
         valores = (titulo, descripcion, prioridad, usuario)
 
         ## Crear objeto para conexión con db
@@ -85,6 +98,7 @@ def crear_ticket():
         cursor.execute(sql, valores) 
         conexion.commit()
 
+        flash("ticket creado correctamente", "success")
         return redirect("/")
     return render_template("crear_ticket.html")
 
@@ -93,7 +107,8 @@ def crear_ticket():
 def borrar_ticket(id_ticket):
     ## Crear condición para que solo administradores accedan a la siguiente acción
     if session["rol"] != "admin":
-        return "no tienes permisos"
+        flash("⛔ No tienes permisos para realizar esta acción", "warning")
+        return redirect("/")
     
     ## Crear objeto con conexión a la db
     cursor = conexion.cursor()
