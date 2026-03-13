@@ -1,0 +1,31 @@
+body
+{ 
+    min-height: 100vh;
+    background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+    background-attachment: fixed;
+}
+
+.main-container
+{
+    background: white;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.2);
+}
+
+table tr:hover
+{
+    background:#f5f5f5;
+    transition:0.2s;
+}
+
+.table-tickets tbody tr td
+{
+    transition:0.2s;
+}
+
+.table-tickets tbody tr:hover td
+{
+    background:#f1f3f5;
+    transform:scale(1.01);
+}

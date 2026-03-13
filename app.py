@@ -47,7 +47,7 @@ def logout():
 ## Decorador para indicarle a flask a partir de donde ejecute la siguiente función 
 @app.route("/")
 def home():
-    ## Condición para que solo usuario acceda a este apartado
+    ## Condición para que solo usuario validado acceda a este apartado
     if "usuario" not in session:
         return redirect("/login")
 
@@ -75,6 +75,11 @@ def home():
 ## Crear decorador para... Get: mostrar formulario o POST: recivir datos enviados
 @app.route("/crear", methods = ["GET", "POST"])
 def crear_ticket():
+
+    ## Condición para que solo usuario validado acceda a este apartado
+    if "usuario" not in session:
+        return redirect("/login")
+    
     ## Condicional para saber si antes la función leyó un metodo tipo POST
     if request.method == "POST":
         # reques.form obtiene los datos del formulario HTML
