@@ -22,16 +22,21 @@ def login():
         username = request.form["username"]
         password = request.form["password"]
 
+        ## Consulta para conocer todos los datos que se relacionen con el campo "username" y "password"
         cursor.execute("""select * from usuarios where username = %s and password = %s """, (username, password))
 
+        ## Capturar los datos del usuario
         usuario = cursor.fetchone()
 
+        ## Condición para comparar los campos "usuario" y "rol" con los campos "username"(1) y "rol"(3) de la tabla "usuarios" de la base de datos
         if usuario:
             session["usuario"] = usuario[1]
             session["rol"] = usuario[3]
 
+            ## Si la comparación es exitosa direcciona al usuario a la siguiente ruta
             return redirect("/")
         else: 
+            ## En caso de que no se cumpla la comparativa niega el acceso al usuario co credenciales incorrectas
             flash("⚠ usuario o contraseña incorrectos", "danger")
             return redirect("/login")
         
@@ -53,9 +58,11 @@ def home():
 
     ## Aquí flask recibe el valor del input del formulario
     buscar = request.args.get("buscar", "")
+
     ## Crear un objeto con la conexión a la db
     cursor = conexion.cursor()
 
+    ## Crear un limite de páginas y datos para las consultas
     pagina = request.args.get("pagina", 1, type=int)
     limite = 4
     offset = (pagina - 1) * limite
@@ -71,6 +78,24 @@ def home():
 
     # return "Sistema de tickets funcionando 🔥"
     return render_template("ver_tickets.html", tickets = tickets, pagina = pagina)
+
+## Decorador para acceder a la lista de usuarios
+@app.route("/usuarios")
+def admin_users():
+    ## Validad inicio de sesion por parte del usuario
+    if "usuario" not in session:
+        return redirect("/login")
+    ## Crear objeto
+    cursor = conexion.cursor()
+
+    ## Ejecutar conusulta
+    cursor.execute("""Select * from usuarios where estado = 1""")
+
+    ## Extraer datos
+    usuarios = cursor.fetchall()
+
+    ## return a template de usuarios
+    return render_template("usuarios.html", usuarios = usuarios)
 
 ## Crear decorador para... Get: mostrar formulario o POST: recivir datos enviados
 @app.route("/crear", methods = ["GET", "POST"])

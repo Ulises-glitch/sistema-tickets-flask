@@ -2,19 +2,22 @@
 {% extends "base.html" %}
 {% block title %} Ver tickets {% endblock %}
 {% block content %}
-
+<!--- Etiqueta para colocar titulo al template-->
 <h2 class="text-primary">Lista de tickets</h2>
+<!--- Formulario par abuscar algún ticket en especifico -->
 <form method="GET" action="/" class="mb-3">
     <div class="input-group">
         <input type="text" name="buscar" class="form-control" placeholder="Buscar ticket...">
         <button class="btn btn-primary"><i class="bi bi-search"></i>Buscar</button>
     </div>
 </form>
+<!--- Contenedor para códificar tabla para imprimir tickets -->
 <div class="container mt-2 p-4 shadow rounded bg-light">
+<!--- Tabla para imprimir los tickets -->
 <table class="mt-2 table table-tickets table-hover table-striped">
+    <!---- Encabezados de cada columna -->
     <thead>
         <tr>
-            <th>ID</th>
             <th>Titulo</th>
             <th>Descripción</th>
             <th>Prioridad</th>
@@ -24,12 +27,11 @@
             <th>Accion</th>
         </tr>
     </thead>
-
+    <!--- Cuerpo y filas de la tabla -->
     <tbody>
-        <!--- Conexión con jinja2 -->
+        <!--- Conexión con jinja2 para imprimir tickets -->
         {% for ticket in tickets %}
         <tr>
-            <td>{{ ticket[0] }}</td>
             <td>{{ ticket[1] }}</td>
             <td>{{ ticket[2] }}</td>
             <td>{{ ticket[3] }}</td>

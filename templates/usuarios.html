@@ -1,0 +1,38 @@
+<!--- Implementar código del template base -->
+{% extends "base.html" %}
+{% block title %} Lista de Usuarios {% endblock %}
+{% block content %}
+
+<!---- Etiqueta paa colocar titulo del template-->
+<h2 class="text-primary text-center">👥 Lista de Usuarios </h2>
+
+<!---- Contenedor -->
+<div class="container mt-3 text-center">
+    <div class="tabla-contenedor mx-auto" style="max-width: 600px;">
+        <div class="shadow rounded bg-light p-3">
+            <!--- Tabla para imprimir usuarios -->
+            <table class="mt-0 table table-users table-hover table-striped mb-0">
+                <thead>
+                    <tr>
+                        <th>Usario</th>
+                        <th>Rol</th>
+                        <th>Modificar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for usuario in usuarios %}
+                    <tr>
+                        <td>{{ usuario[1] }}</td>
+                        <td>{{ usuario[3] }}</td>
+                        <td>
+                            <i class="bi bi-pencil me-3 icono-accion"></i>
+                            <i class="bi bi-trash icono-accion"></i>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
